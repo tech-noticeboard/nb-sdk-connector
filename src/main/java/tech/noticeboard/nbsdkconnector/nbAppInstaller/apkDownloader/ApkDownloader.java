@@ -1,4 +1,4 @@
-package tech.noticeboard.nbsdkconnector.nbAppInstall.apkDownloader;
+package tech.noticeboard.nbsdkconnector.nbAppInstaller.apkDownloader;
 
 /**
  * Created by Priyansh Srivastava on 09-Oct-17.
