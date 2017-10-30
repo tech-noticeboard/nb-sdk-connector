@@ -1,4 +1,4 @@
-package tech.noticeboard.nbsdkconnector.nbAppInstaller;
+package tech.noticeboard.nbsdkconnector.nbAppInstall;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -15,8 +15,8 @@ import java.io.File;
 import tech.noticeboard.nbsdkconnector.BuildConfig;
 import tech.noticeboard.nbsdkconnector.Constants;
 import tech.noticeboard.nbsdkconnector.R;
-import tech.noticeboard.nbsdkconnector.nbAppInstaller.apkDownloader.ApkDownloader;
-import tech.noticeboard.nbsdkconnector.nbAppInstaller.apkDownloader.ApkDownloaderListener;
+import tech.noticeboard.nbsdkconnector.nbAppInstall.apkDownloader.ApkDownloader;
+import tech.noticeboard.nbsdkconnector.nbAppInstall.apkDownloader.ApkDownloaderListener;
 
 import static tech.noticeboard.nbsdkconnector.Constants.PERMISSION_REQUEST_READ_STORAGE;
 
@@ -24,18 +24,14 @@ import static tech.noticeboard.nbsdkconnector.Constants.PERMISSION_REQUEST_READ_
 /**
  * Created by Priyansh Srivastava on 29-Oct-17.
  */
-public class AppInstaller implements ApkDownloaderListener {
+public class AppInstall implements ApkDownloaderListener {
 
     private Context context;
-    private NBAppInstallerListener listener;
+    private NBAppInstallListener listener;
 
-    public AppInstaller(Context context) throws RuntimeException {
+    public AppInstall(Context context) {
         this.context = context;
-        if(context instanceof NBAppInstallerListener) {
-            this.listener = (NBAppInstallerListener) context;
-        } else {
-            throw new RuntimeException("Argument should implement NBAppInstallerListener");
-        }
+        this.listener = (NBAppInstallListener)context;
     }
 
 

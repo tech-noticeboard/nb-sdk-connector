@@ -1,4 +1,4 @@
-package tech.noticeboard.nbsdkconnector.nbAppInstaller.apkDownloader;
+package tech.noticeboard.nbsdkconnector.nbAppInstall.apkDownloader;
 
 import android.content.Context;
 
