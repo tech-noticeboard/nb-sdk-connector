@@ -1,4 +1,4 @@
-package tech.noticeboard.nbsdkconnector.NBAppUpdate;
+package tech.noticeboard.nbsdkconnector.nbAppInstall.apkDownloader;
 
 /**
  * Created by Priyansh Srivastava on 09-Oct-17.
@@ -10,8 +10,6 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.PowerManager;
 
-import tech.noticeboard.nbsdkconnector.Constants;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,13 +17,15 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import tech.noticeboard.nbsdkconnector.Constants;
+
 /**
  * Created by Priyansh on 24-10-2017.
  */
 public class ApkDownloader extends AsyncTask<Void, Integer, Boolean> {
 
     private ProgressDialog progressDialog;
-    private AppUpdateListener callingActivity;
+    private ApkDownloaderListener callingActivity;
     private PowerManager.WakeLock mWakeLock;
 
     public static final String DOWNLOAD_URL = Constants.DOWNLOAD_URL;
@@ -33,10 +33,11 @@ public class ApkDownloader extends AsyncTask<Void, Integer, Boolean> {
     public static final String FILE_NAME = Constants.LOCAL_APP;
     public static final String NEW_APK_PATH = APP_PATH + "/" + FILE_NAME;
 
-    public void setup(AppUpdateListener callingActivity, ProgressDialog progressDialog) {
+    public void setup(ApkDownloaderListener callingActivity, ProgressDialog progressDialog) {
         this.callingActivity = callingActivity;
         this.progressDialog = progressDialog;
     }
+
 
     @Override
     protected Boolean doInBackground(Void... arg0) {
@@ -99,9 +100,12 @@ public class ApkDownloader extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
+
     @Override
     protected void onPreExecute() {
+
         super.onPreExecute();
+
         // take CPU lock to prevent CPU from going off if the user
         // presses the power button during download
         PowerManager pm = (PowerManager) callingActivity.getContext().getSystemService(Context.POWER_SERVICE);
@@ -111,17 +115,22 @@ public class ApkDownloader extends AsyncTask<Void, Integer, Boolean> {
         progressDialog.show();
     }
 
+
     @Override
     protected void onPostExecute(Boolean isSuccess) {
+
+        if(null != progressDialog && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+
         if (isSuccess) {
             super.onPostExecute(true);
-            progressDialog.dismiss();
             callingActivity.onDownloadSuccess();
         } else {
-            progressDialog.dismiss();
             callingActivity.onDownloadFailure();
         }
     }
+
 
     @Override
     protected void onProgressUpdate(Integer... values) {

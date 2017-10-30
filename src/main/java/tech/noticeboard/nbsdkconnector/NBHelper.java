@@ -1,60 +1,39 @@
 package tech.noticeboard.nbsdkconnector;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 
-import tech.noticeboard.nbsdkconnector.NBAppUpdate.AppUpdate;
-import tech.noticeboard.nbsdkconnector.NBUserActivity.NBUserActivity;
-import tech.noticeboard.nbsdkconnector.NBUserActivity.UserActivityAsyncTask;
+import tech.noticeboard.nbsdkconnector.nbUserActivity.NBUserActivity;
+import tech.noticeboard.nbsdkconnector.nbUserActivity.UserActivityAsyncTask;
 
 /**
  * Created by Priyansh Srivastava on 27-Oct-17.
  */
 public class NBHelper {
 
-    public static boolean openNoticeboard(Context context) {
-
-        boolean result;
+    public static void openNoticeboard(@NonNull Activity activity) {
 
         try {
-            PackageManager pm = context.getPackageManager();
-            boolean isInstalled = isPackageInstalled("tech.noticeboard", pm);
 
-            if(isInstalled) {
-                Intent i = new Intent();
-                i.setAction("tech.noticeboard.NBStartActivity");
-                ((Activity)context).startActivityForResult(i,0);
-                result = true;
-            } else {
-                AppUpdate appUpdate = new AppUpdate(context);
-                appUpdate.updateApp();
-                result = true;
-            }
+            Intent i = new Intent(activity, NBHelperActivity.class);
+            activity.startActivity(i);
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            result = false;
         }
-
-        return result;
     }
 
 
-    private static boolean isPackageInstalled(String packagename, PackageManager packageManager) {
+    public static void getActivity(@NonNull  NBUserActivity activityInterface) {
+
         try {
-            packageManager.getPackageInfo(packagename, 0);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
+            UserActivityAsyncTask activityAsyncTask = new UserActivityAsyncTask();
+            activityAsyncTask.setup(activityInterface);
+            activityAsyncTask.execute();
         }
-    }
-
-
-    public static void getActivity(NBUserActivity activityInterface) {
-        UserActivityAsyncTask activityAsyncTask = new UserActivityAsyncTask();
-        activityAsyncTask.setup(activityInterface);
-        activityAsyncTask.execute();
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

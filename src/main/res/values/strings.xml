@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">nbsdkconnector</string>
+    <string name="app_install_title">Installing Noticeboard</string>
+    <string name="app_install_message">Downloading&#8230;</string>
 </resources>
