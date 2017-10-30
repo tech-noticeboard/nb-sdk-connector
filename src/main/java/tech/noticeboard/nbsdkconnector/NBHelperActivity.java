@@ -1,20 +1,20 @@
 package tech.noticeboard.nbsdkconnector;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import tech.noticeboard.nbsdkconnector.nbAppInstall.AppInstall;
-import tech.noticeboard.nbsdkconnector.nbAppInstall.NBAppInstallListener;
+import tech.noticeboard.nbsdkconnector.nbAppInstaller.AppInstaller;
+import tech.noticeboard.nbsdkconnector.nbAppInstaller.NBAppInstallerListener;
 
 /**
  * Created by Priyansh Srivastava on 30-Oct-17.
  */
 
-public class NBHelperActivity extends AppCompatActivity implements NBAppInstallListener {
+public class NBHelperActivity extends AppCompatActivity implements NBAppInstallerListener {
+
+    AppInstaller appInstaller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +37,8 @@ public class NBHelperActivity extends AppCompatActivity implements NBAppInstallL
                 startActivityForResult(i, 0);
                 finish();
             } else {
-                AppInstall appInstall = new AppInstall(this);
-                appInstall.updateApp();
+                appInstaller = new AppInstaller(this);
+                appInstaller.updateApp();
             }
         }
         catch (Exception ex) {
