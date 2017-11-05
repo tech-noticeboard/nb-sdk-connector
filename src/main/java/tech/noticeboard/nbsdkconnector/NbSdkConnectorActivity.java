@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import tech.noticeboard.nbsdkconnector.nbAppInstaller.AppInstaller;
 import tech.noticeboard.nbsdkconnector.nbAppInstaller.NBAppInstallerListener;
@@ -12,7 +13,7 @@ import tech.noticeboard.nbsdkconnector.nbAppInstaller.NBAppInstallerListener;
  * Created by Priyansh Srivastava on 30-Oct-17.
  */
 
-public class NBHelperActivity extends AppCompatActivity implements NBAppInstallerListener {
+public class NbSdkConnectorActivity extends AppCompatActivity implements NBAppInstallerListener {
 
     AppInstaller appInstaller;
 
@@ -34,12 +35,19 @@ public class NBHelperActivity extends AppCompatActivity implements NBAppInstalle
             if (isInstalled && isAppInstalledFirstTime) {
                 Intent i = new Intent();
                 i.setAction(Constants.INSTALL_PACKAGE_ACTIVITY);
+                i.putExtra(Constants.LOGIN_KEY, getLoginData());
+                i.putExtra(Constants.SDK_KEY, NbSdkHelper.readSdkKey(this));
                 startActivityForResult(i, 0);
                 finish();
             } else {
                 appInstaller = new AppInstaller(this);
                 appInstaller.updateApp();
             }
+        }
+        catch (NullPointerException ex) {
+            ex.printStackTrace();
+            Toast.makeText(this, Constants.INVALID_SDK_LOGIN_OR_KEY, Toast.LENGTH_LONG).show();
+            finish();
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -56,6 +64,20 @@ public class NBHelperActivity extends AppCompatActivity implements NBAppInstalle
             return false;
         }
     }
+
+
+    private String getLoginData() {
+        //Fetch the login data
+        String loginData = "";
+        if(null != getIntent()) {
+            loginData = getIntent().getStringExtra(Constants.LOGIN_KEY);
+        } else {
+            throw new NullPointerException();
+        }
+
+        return loginData;
+    }
+
 
 
     @Override

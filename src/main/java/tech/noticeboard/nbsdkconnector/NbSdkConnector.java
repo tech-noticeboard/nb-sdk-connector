@@ -1,6 +1,7 @@
 package tech.noticeboard.nbsdkconnector;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
@@ -10,13 +11,13 @@ import tech.noticeboard.nbsdkconnector.nbUserActivity.UserActivityAsyncTask;
 /**
  * Created by Priyansh Srivastava on 27-Oct-17.
  */
-public class NBHelper {
+public class NbSdkConnector {
 
-    public static void openNoticeboard(@NonNull Activity activity) {
+    public static void openNoticeboard(@NonNull Activity activity, String identity) {
 
         try {
-
-            Intent i = new Intent(activity, NBHelperActivity.class);
+            Intent i = new Intent(activity, NbSdkConnectorActivity.class);
+            i.putExtra(Constants.LOGIN_KEY, identity);
             activity.startActivity(i);
         }
         catch (Exception ex) {
@@ -25,12 +26,13 @@ public class NBHelper {
     }
 
 
-    public static void getActivity(@NonNull  NBUserActivity activityInterface) {
+    public static void getActivity(@NonNull Context context, @NonNull  NBUserActivity activityInterface) {
 
         try {
+
             UserActivityAsyncTask activityAsyncTask = new UserActivityAsyncTask();
             activityAsyncTask.setup(activityInterface);
-            activityAsyncTask.execute();
+            activityAsyncTask.execute(NbSdkHelper.getLoginToken(context));
         }
         catch (Exception ex) {
             ex.printStackTrace();

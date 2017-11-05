@@ -22,7 +22,7 @@
         </provider>
 
         <activity
-            android:name=".NBHelperActivity"
+            android:name=".NbSdkConnectorActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
 
@@ -34,6 +34,8 @@
                 <data android:scheme="package" android:path="tech.noticeboard.nbsdkconnector"/>
             </intent-filter>
         </receiver>
+
+        <meta-data android:name="tech.noticeboard.sdkKey" android:value="cc44d8fe-9391-431c-9e2a-f1b9e233bd96" />
 
     </application>
 </manifest>
