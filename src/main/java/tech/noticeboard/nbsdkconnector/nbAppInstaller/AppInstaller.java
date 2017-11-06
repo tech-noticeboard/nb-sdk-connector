@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -44,18 +45,23 @@ public class AppInstaller implements ApkDownloaderListener {
 
         try {
 
-            //Start the installer
-            File apkFile = new File(ApkDownloader.NEW_APK_PATH);
-            Uri outputFileUri = FileProvider.getUriForFile(context,
-                    BuildConfig.APPLICATION_ID + ".provider",
-                    new File(apkFile.getPath()));
-
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(outputFileUri, "application/vnd.android.package-archive");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            ((Activity)context).startActivityForResult(intent,
-                    Constants.START_PACKAGE_INSTALLER_REQUEST_CODE);
+            File toInstall = new File(ApkDownloader.NEW_APK_PATH);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Uri apkUri = FileProvider.getUriForFile(context,
+                        BuildConfig.APPLICATION_ID + ".provider", toInstall);
+                Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                intent.setData(apkUri);
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                ((Activity)context).startActivityForResult(intent,
+                        Constants.START_PACKAGE_INSTALLER_REQUEST_CODE);
+            } else {
+                Uri apkUri = Uri.fromFile(toInstall);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                ((Activity)context).startActivityForResult(intent,
+                        Constants.START_PACKAGE_INSTALLER_REQUEST_CODE);
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();
