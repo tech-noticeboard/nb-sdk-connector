@@ -52,7 +52,7 @@ class NbSdkHelper {
     }
 
 
-    public static String getCountryCode(Context context) {
+    private static String getCountryCode(Context context) {
 
         String countryId = "";
 
