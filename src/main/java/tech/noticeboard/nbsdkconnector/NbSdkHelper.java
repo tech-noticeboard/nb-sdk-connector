@@ -99,12 +99,6 @@ class NbSdkHelper {
         return email.matches(Constants.EMAIL_REGEX);
     }
 
-    public static boolean validatePhone(String phone) {
-        if(phone == null)
-            return false;
-        return Pattern.matches(Constants.PHONE_REGEX, phone);
-    }
-
 
     public static String readSdkKey(@NonNull Context context) throws NullPointerException {
 
