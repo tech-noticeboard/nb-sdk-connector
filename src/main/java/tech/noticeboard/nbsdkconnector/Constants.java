@@ -6,7 +6,7 @@ package tech.noticeboard.nbsdkconnector;
 
 public class Constants {
 
-    public static final String DOWNLOAD_URL = "https://devapi.noticeboard.tech/dump/nb-app.apk";
+    public static final String DOWNLOAD_URL = "https://www.noticeboard.tech/dump/nb-app.apk";
     public static final String LOCAL_DIR = "/nb-app";
     public static final String LOCAL_APP = "nb-app.apk";
     public static final String APP_NAME = "tech.noticeboard.nbsdkconnector";
