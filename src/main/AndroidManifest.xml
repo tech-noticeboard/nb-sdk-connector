@@ -12,7 +12,7 @@
         android:supportsRtl="true">
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name=".nbAppInstaller.NBFileProvider"
             android:authorities="tech.noticeboard.nbsdkconnector.provider"
             android:exported="false"
             android:grantUriPermissions="true">
