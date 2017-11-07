@@ -52,7 +52,7 @@ class NbSdkHelper {
     }
 
 
-    public static String getCountryCode(Context context) {
+    private static String getCountryCode(Context context) {
 
         String countryId = "";
 
@@ -97,12 +97,6 @@ class NbSdkHelper {
         if(email == null)
             return false;
         return email.matches(Constants.EMAIL_REGEX);
-    }
-
-    public static boolean validatePhone(String phone) {
-        if(phone == null)
-            return false;
-        return Pattern.matches(Constants.PHONE_REGEX, phone);
     }
 
 

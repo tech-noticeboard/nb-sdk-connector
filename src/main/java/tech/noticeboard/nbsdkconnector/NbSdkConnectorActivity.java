@@ -27,6 +27,7 @@ public class NbSdkConnectorActivity extends AppCompatActivity implements NBAppIn
     private void installOrOpenApp() {
 
         try {
+
             //Check if package is installed
             PackageManager pm = getPackageManager();
             boolean isInstalled = isPackageInstalled(Constants.INSTALL_PACKAGE_NAME, pm);
@@ -66,13 +67,19 @@ public class NbSdkConnectorActivity extends AppCompatActivity implements NBAppIn
     }
 
 
-    private String getLoginData() {
+    private String getLoginData() throws NullPointerException {
+
         //Fetch the login data
         String loginData = "";
         if(null != getIntent()) {
             loginData = getIntent().getStringExtra(Constants.LOGIN_KEY);
+            String check = loginData;
+            if(!NbSdkHelper.validateEmail(check) &&
+                    (null == (loginData = (NbSdkHelper.formatPhone(this, check))))) {
+                throw new NullPointerException(Constants.INVALID_SDK_LOGIN_OR_KEY);
+            }
         } else {
-            throw new NullPointerException();
+            throw new NullPointerException(Constants.INVALID_SDK_LOGIN_OR_KEY);
         }
 
         return loginData;
