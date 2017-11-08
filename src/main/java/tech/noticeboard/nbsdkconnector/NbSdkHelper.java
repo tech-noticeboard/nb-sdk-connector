@@ -14,8 +14,6 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 
-import java.util.regex.Pattern;
-
 /**
  * Created by Priyansh Srivastava on 31-Oct-17.
  */
@@ -77,7 +75,7 @@ class NbSdkHelper {
     }
 
 
-    public static String formatPhone(Context context, String phone) {
+    static String formatPhone(Context context, String phone) {
 
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         Phonenumber.PhoneNumber phoneNumber = null;
@@ -93,14 +91,14 @@ class NbSdkHelper {
     }
 
 
-    public static boolean validateEmail(String email){
+    static boolean validateEmail(String email){
         if(email == null)
             return false;
         return email.matches(Constants.EMAIL_REGEX);
     }
 
 
-    public static String readSdkKey(@NonNull Context context) throws NullPointerException {
+    static String readSdkKey(@NonNull Context context) throws NullPointerException {
 
         String TAG = "Noticeboard Helper";
         String sdkKey = "";
@@ -119,5 +117,22 @@ class NbSdkHelper {
         }
 
         return sdkKey;
+    }
+
+
+    static String readSdkId(@NonNull Context context) throws NullPointerException {
+
+        String sdkId = "";
+
+        try {
+            String key = readSdkKey(context);
+            if(key.split(Constants.SDK_SPLIT_KEY).length == 2) {
+                sdkId = key.split(Constants.SDK_SPLIT_KEY)[1];
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return sdkId;
     }
 }

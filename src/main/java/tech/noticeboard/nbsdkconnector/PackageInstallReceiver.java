@@ -3,7 +3,6 @@ package tech.noticeboard.nbsdkconnector;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 
 /**
  * Created by Priyansh Srivastava on 31-Oct-17.

@@ -32,7 +32,8 @@ public class NbSdkConnector {
 
             UserActivityAsyncTask activityAsyncTask = new UserActivityAsyncTask();
             activityAsyncTask.setup(activityInterface);
-            activityAsyncTask.execute(NbSdkHelper.getLoginToken(context));
+            activityAsyncTask.execute(NbSdkHelper.getLoginToken(context),
+                    NbSdkHelper.readSdkId(context));
         }
         catch (Exception ex) {
             ex.printStackTrace();
