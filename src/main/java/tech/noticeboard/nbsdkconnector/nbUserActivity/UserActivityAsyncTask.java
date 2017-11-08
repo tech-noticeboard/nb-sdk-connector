@@ -40,7 +40,7 @@ public class UserActivityAsyncTask extends AsyncTask<String, Void, Integer> {
 
         try {
 
-            URL url = new URL(Constants.ACTIVITY_URL);
+            URL url = new URL(String.format(Constants.ACTIVITY_URL, arg0[1]));
             urlConnection = (HttpsURLConnection) url.openConnection();
 
             urlConnection.setConnectTimeout(20000);
