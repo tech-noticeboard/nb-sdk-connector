@@ -11,7 +11,7 @@ public class Constants {
     public static final String LOCAL_APP = "nb-app.apk";
     static final String APP_NAME = "tech.noticeboard.nbsdkconnector";
     static final String APP_INSTALL_KEY = "NB_APP_INSTALL";
-    public static final String ACTIVITY_URL = "https://devapi.noticeboard.tech/noticeboard-service/community/%s/login";
+    public static final String ACTIVITY_URL = "https://devapi.noticeboard.tech/noticeboard-service/community/%s/activity";
     public static final String ACTIVITY_COUNT_KEY = "activityCount";
     static final String CONTENT_PROVIDER_URL = "content://tech.noticeboard.TokenProvider/token";
     static final String CONTENT_PROVIDER_KEY = "_id";
