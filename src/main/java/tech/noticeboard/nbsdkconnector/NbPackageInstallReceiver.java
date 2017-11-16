@@ -8,7 +8,7 @@ import android.content.Intent;
  * Created by Priyansh Srivastava on 31-Oct-17.
  */
 
-public class PackageInstallReceiver extends BroadcastReceiver {
+public class NbPackageInstallReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
