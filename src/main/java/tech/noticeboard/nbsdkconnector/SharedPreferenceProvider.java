@@ -25,4 +25,21 @@ class SharedPreferenceProvider {
         return sharedPreferences.getBoolean(Constants.APP_INSTALL_KEY, false);
     }
 
+
+    static void writeIfAppInstalledOverride(Context context) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.APP_NAME,
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(Constants.APP_INSTALL_KEY_OVERRIDE, true);
+        editor.apply();
+    }
+
+
+    static boolean readIfAppInstalledOverride(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.APP_NAME,
+                Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(Constants.APP_INSTALL_KEY_OVERRIDE, false);
+    }
+
 }
