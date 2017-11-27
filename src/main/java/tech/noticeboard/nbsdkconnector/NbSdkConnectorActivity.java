@@ -31,7 +31,6 @@ public class NbSdkConnectorActivity extends AppCompatActivity implements NBAppIn
             //Check if package is installed
             PackageManager pm = getPackageManager();
             boolean isInstalled = isPackageInstalled(Constants.INSTALL_PACKAGE_NAME, pm);
-            boolean isAppInstalledFirstTime;
 
             //Check the override flag.
             //If the override flag is set to true, that means that, we need to ignore the flag
@@ -39,11 +38,11 @@ public class NbSdkConnectorActivity extends AppCompatActivity implements NBAppIn
             //This we have done because, the app update logic in the SDK APP was breaking.
             //Hence, we manually install it here again.
             //This is a one time operation.
-            if(!SharedPreferenceProvider.readIfAppInstalledOverride(this)) {
-                isAppInstalledFirstTime = false;
-                SharedPreferenceProvider.writeIfAppInstalledOverride(this);
-            } else {
+            boolean isAppInstalledFirstTime = SharedPreferenceProvider.readIfAppInstalledOverride(this);
+            if(isAppInstalledFirstTime) {
                 isAppInstalledFirstTime = SharedPreferenceProvider.readIfAppInstalled(this);
+            } else {
+                SharedPreferenceProvider.writeIfAppInstalledOverride(this);
             }
 
             if (isInstalled && isAppInstalledFirstTime) {
