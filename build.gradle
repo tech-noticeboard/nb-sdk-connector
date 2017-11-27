@@ -62,7 +62,7 @@ ext {
     siteUrl = 'https://github.com/tech-noticeboard/nb-sdk-connector'
     gitUrl = 'https://github.com/tech-noticeboard/nb-sdk-connector'
 
-    libraryVersion = '0.0.3'
+    libraryVersion = '1.0.2'
 
     developerId = 'priyansh'
     developerName = 'Priyansh Srivastava'
