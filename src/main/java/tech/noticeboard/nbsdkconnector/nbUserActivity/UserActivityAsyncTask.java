@@ -40,32 +40,36 @@ public class UserActivityAsyncTask extends AsyncTask<String, Void, Integer> {
 
         try {
 
-            URL url = new URL(String.format(Constants.ACTIVITY_URL, arg0[1]));
-            urlConnection = (HttpsURLConnection) url.openConnection();
+            //If login token is not null
+            if(null != arg0[0]) {
 
-            urlConnection.setConnectTimeout(20000);
-            urlConnection.setReadTimeout(20000);
-            //urlConnection.setDoOutput(true);
-            urlConnection.setUseCaches(false);
-            urlConnection.setRequestMethod("GET");
+                URL url = new URL(String.format(Constants.ACTIVITY_URL, arg0[1]));
+                urlConnection = (HttpsURLConnection) url.openConnection();
 
-            String authorization = "Bearer " + arg0[0];
-            urlConnection.addRequestProperty("Authorization", authorization);
-            urlConnection.addRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            urlConnection.addRequestProperty("Accept", "application/json");
-            urlConnection.connect();
+                urlConnection.setConnectTimeout(20000);
+                urlConnection.setReadTimeout(20000);
+                //urlConnection.setDoOutput(true);
+                urlConnection.setUseCaches(false);
+                urlConnection.setRequestMethod("GET");
 
-            int statusCode = urlConnection.getResponseCode();
-            if (statusCode != HttpURLConnection.HTTP_OK) {
+                String authorization = "Bearer " + arg0[0];
+                urlConnection.addRequestProperty("Authorization", authorization);
+                urlConnection.addRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                urlConnection.addRequestProperty("Accept", "application/json");
+                urlConnection.connect();
 
-                Log.d(TAG, "NbSdkConnector:  connection failed: statusCode: " + statusCode);
-                result = -1;
+                int statusCode = urlConnection.getResponseCode();
+                if (statusCode != HttpURLConnection.HTTP_OK) {
 
-            } else {
+                    Log.d(TAG, "NbSdkConnector:  connection failed: statusCode: " + statusCode);
+                    result = -1;
 
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                InputStreamReader responseBodyReader = new InputStreamReader(in, "UTF-8");
-                result = getActivityCountFromJson(responseBodyReader);
+                } else {
+
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                    InputStreamReader responseBodyReader = new InputStreamReader(in, "UTF-8");
+                    result = getActivityCountFromJson(responseBodyReader);
+                }
             }
 
         } catch (IOException e) {
